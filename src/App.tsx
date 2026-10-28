@@ -1,5 +1,6 @@
 import KpiCard from './components/KpiCard'
-import { kpiItems } from './data/mockData'
+import Counter from './components/Counter'
+import { countries, kpiItems } from './data/mockData'
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
             change={item.change}
           />
         ))}
+      </section>
+      <section>
+        <Counter label="Вибрані країни" min={0} max={countries.length} />
       </section>
     </main>
   )
