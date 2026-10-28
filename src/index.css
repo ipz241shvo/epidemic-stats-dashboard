@@ -141,3 +141,12 @@ main {
 }
 
 .countries-table img { margin-right: 8px; vertical-align: middle; }
+
+.status {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fff;
+  color: #5b6475;
+}
+
+.status--error { color: #c93030; }
