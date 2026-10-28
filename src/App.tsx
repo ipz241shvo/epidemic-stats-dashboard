@@ -1,6 +1,7 @@
 import KpiCard from './components/KpiCard'
 import Counter from './components/Counter'
 import Toggle from './components/Toggle'
+import FilteredList from './components/FilteredList'
 import { countries, kpiItems } from './data/mockData'
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
 
       <section>
         <Counter label="Вибрані країни" min={0} max={countries.length} />
+      </section>
+
+      <section>
+        <FilteredList title="Країни" items={countries} />
       </section>
     </main>
   )
