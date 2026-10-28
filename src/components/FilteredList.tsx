@@ -40,7 +40,7 @@ function FilteredList({ title, items }: FilteredListProps) {
       ) : (
         <ul className="filtered-list__items">
           {visibleItems.map((item) => (
-            <li key={item.countryInfo.iso3} className="filtered-list__item">
+            <li key={item.country} className="filtered-list__item">
               <span>{item.country}</span>
               <span className="filtered-list__cases">
                 {item.cases.toLocaleString('uk-UA')}

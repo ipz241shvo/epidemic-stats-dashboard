@@ -1,6 +1,6 @@
 export interface CountryInfo {
-  iso2: string
-  iso3: string
+  iso2: string | null
+  iso3: string | null
   flag: string
 }
 
@@ -25,4 +25,18 @@ export interface KpiItem {
   title: string
   value: number
   change: number
+}
+
+export interface GlobalStat {
+  cases: number
+  todayCases: number
+  deaths: number
+  todayDeaths: number
+  recovered: number
+  todayRecovered: number
+  active: number
+  critical: number
+  tests: number
+  population: number
+  affectedCountries: number
 }
