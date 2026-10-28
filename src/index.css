@@ -102,3 +102,42 @@ main {
 
 .filtered-list__cases { color: #5b6475; }
 .filtered-list__empty { color: #5b6475; }
+
+.table-wrapper {
+  max-height: 480px;
+  overflow: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.countries-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.countries-table th,
+.countries-table td {
+  padding: 8px 12px;
+  text-align: right;
+  border-bottom: 1px solid #e8ebf0;
+}
+
+.countries-table th:first-child,
+.countries-table td:first-child { text-align: left; }
+
+.countries-table th {
+  position: sticky;
+  top: 0;
+  background: #e8ebf0;
+}
+
+.countries-table th button {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.countries-table img { margin-right: 8px; vertical-align: middle; }
