@@ -23,7 +23,7 @@ function App() {
       </Toggle>
 
       <section>
-        <Counter label="Вибрані країни" min={0} max={countries.length} />
+        <Counter label="Днів історії" initialValue={30} min={7} max={90} />
       </section>
 
       <section>
