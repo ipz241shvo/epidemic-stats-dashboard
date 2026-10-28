@@ -3,6 +3,7 @@ import Counter from './components/Counter'
 import Toggle from './components/Toggle'
 import FilteredList from './components/FilteredList'
 import { countries, kpiItems } from './data/mockData'
+import CountriesTable from './components/CountriesTable'
 
 function App() {
   return (
@@ -27,8 +28,14 @@ function App() {
       </section>
 
       <section>
+        <h2>Таблиця країн</h2>
+        <CountriesTable countries={countries} />
+      </section>
+
+      <section>
         <FilteredList title="Країни" items={countries} />
       </section>
+      
     </main>
   )
 }
