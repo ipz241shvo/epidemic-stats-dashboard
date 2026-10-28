@@ -3,7 +3,7 @@ import Counter from './components/Counter'
 import Toggle from './components/Toggle'
 import FilteredList from './components/FilteredList'
 import { countries, kpiItems } from './data/mockData'
-import CountriesTable from './components/CountriesTable'
+import CountriesContainer from './containers/CountriesContainer'
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
 
       <section>
         <h2>Таблиця країн</h2>
-        <CountriesTable countries={countries} />
+        <CountriesContainer />
       </section>
 
       <section>
