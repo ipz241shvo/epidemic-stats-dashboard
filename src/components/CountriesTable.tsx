@@ -7,6 +7,7 @@ type SortDirection = 'asc' | 'desc'
 
 interface CountriesTableProps {
   countries: CountryStat[]
+  initialSortKey?: SortKey
 }
 
 const COLUMNS: { key: SortKey; label: string }[] = [
@@ -17,8 +18,8 @@ const COLUMNS: { key: SortKey; label: string }[] = [
   { key: 'active', label: 'Активні' },
 ]
 
-function CountriesTable({ countries }: CountriesTableProps) {
-  const [sortKey, setSortKey] = useState<SortKey>('cases')
+function CountriesTable({ countries, initialSortKey = 'cases' }: CountriesTableProps) {
+  const [sortKey, setSortKey] = useState<SortKey>(initialSortKey)
   const [direction, setDirection] = useState<SortDirection>('desc')
 
   const sortedCountries = useMemo(() => {

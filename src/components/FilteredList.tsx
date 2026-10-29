@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import type { CountryStat } from '../types/country'
+import type { SortField } from '../types/filters'
 import { formatNumber } from '../utils/format'
 
 interface FilteredListProps {
   title: string
   items: CountryStat[]
+  valueKey: SortField
 }
 
 const ALL = 'all'
 
-function FilteredList({ title, items }: FilteredListProps) {
+function FilteredList({ title, items, valueKey }: FilteredListProps) {
   const [continent, setContinent] = useState(ALL)
 
   const continents = [...new Set(items.map((item) => item.continent))]
@@ -46,7 +48,7 @@ function FilteredList({ title, items }: FilteredListProps) {
             <li key={item.country} className="filtered-list__item">
               <span>{item.country}</span>
               <span className="filtered-list__cases">
-                {formatNumber(item.cases)}
+                {formatNumber(item[valueKey])}
               </span>
             </li>
           ))}

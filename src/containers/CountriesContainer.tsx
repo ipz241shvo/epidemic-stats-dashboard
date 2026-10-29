@@ -42,8 +42,12 @@ function CountriesContainer() {
     }
     return (
       <>
-        <CountriesTable countries={visible} />
-        <FilteredList title="Країни за континентами" items={visible} />
+        <CountriesTable key={sort} countries={visible} initialSortKey={sort} />
+        <FilteredList
+          title="Країни за континентами"
+          items={visible}
+          valueKey={sort}
+        />
       </>
     )
   }
