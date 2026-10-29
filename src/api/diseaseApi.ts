@@ -2,7 +2,7 @@ import type { CountryStat, GlobalStat } from '../types/country'
 
 const BASE_URL = 'https://disease.sh/v3/covid-19'
 
-async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
+export async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, { signal })
 
   if (!response.ok) {
