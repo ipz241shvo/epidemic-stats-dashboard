@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { CountryStat } from '../types/country'
+import { formatNumber } from '../utils/format'
 
 type SortKey = 'country' | 'cases' | 'deaths' | 'recovered' | 'active'
 type SortDirection = 'asc' | 'desc'
@@ -25,7 +26,7 @@ function CountriesTable({ countries }: CountriesTableProps) {
     return [...countries].sort((a, b) =>
       sortKey === 'country'
         ? a.country.localeCompare(b.country, 'uk') * factor
-        : (a[sortKey] - b[sortKey]) * factor,
+        : ((a[sortKey] ?? 0) - (b[sortKey] ?? 0)) * factor,
     )
   }, [countries, sortKey, direction])
 
@@ -60,10 +61,10 @@ function CountriesTable({ countries }: CountriesTableProps) {
                 <img src={item.countryInfo.flag} alt="" width={20} />
                 {item.country}
               </td>
-              <td>{item.cases.toLocaleString('uk-UA')}</td>
-              <td>{item.deaths.toLocaleString('uk-UA')}</td>
-              <td>{item.recovered.toLocaleString('uk-UA')}</td>
-              <td>{item.active.toLocaleString('uk-UA')}</td>
+              <td>{formatNumber(item.cases)}</td>
+              <td>{formatNumber(item.deaths)}</td>
+              <td>{formatNumber(item.recovered)}</td>
+              <td>{formatNumber(item.active)}</td>
             </tr>
           ))}
         </tbody>
