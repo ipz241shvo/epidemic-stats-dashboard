@@ -1,10 +1,4 @@
-import type { CountryStat, KpiItem } from '../types/country'
-
-export const kpiItems: KpiItem[] = [
-  { id: 'cases', title: 'Всього випадків', value: 704753890, change: 0.4 },
-  { id: 'recovered', title: 'Одужань', value: 675619811, change: 0.2 },
-  { id: 'deaths', title: 'Смертей', value: 7010681, change: -0.1 },
-]
+import type { CountryStat } from '../types/country'
 
 export const countries: CountryStat[] = [
   {
