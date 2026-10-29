@@ -14,6 +14,7 @@ export interface CountryStat {
   deaths: number
   todayDeaths: number
   recovered: number
+  todayRecovered: number
   active: number
   critical: number
   casesPerOneMillion: number
@@ -40,3 +41,8 @@ export interface GlobalStat {
   population: number
   affectedCountries: number
 }
+
+export type KpiTotals = Pick<
+  GlobalStat,
+  'cases' | 'todayCases' | 'recovered' | 'todayRecovered' | 'deaths' | 'todayDeaths'
+>
