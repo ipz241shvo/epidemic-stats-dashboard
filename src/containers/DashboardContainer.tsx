@@ -20,7 +20,8 @@ function DashboardContainer() {
   const search = useDebounce(filters.search, 400)
   const { continent, sort } = filters
 
-  const { data, loading, error } = useFetch<CountryStat[]>(`/countries?sort=${sort}`)
+  const path = useDebounce(`/countries?sort=${sort}`, 400)
+  const { data, loading, error } = useFetch<CountryStat[]>(path)
 
   const loaded = [...new Set((data ?? []).map((item) => item.continent))]
     .filter(Boolean)
