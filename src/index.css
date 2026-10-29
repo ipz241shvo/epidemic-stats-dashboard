@@ -152,3 +152,20 @@ main {
 }
 
 .status--error { color: #c93030; }
+
+.filters-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filters-form input,
+.filters-form select {
+  padding: 8px 12px;
+  border: 1px solid #c9ced8;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.filters-form input { flex: 1; min-width: 180px; }
