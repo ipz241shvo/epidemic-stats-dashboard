@@ -6,6 +6,7 @@
 
 - React + TypeScript
 - Vite
+- react-hook-form
 - Звичайний CSS
 
 ## Запуск
@@ -45,13 +46,29 @@ Mock-дані замінено на реальні з disease.sh. Запити �
 
 Примітка: disease.sh більше не оновлює щоденні лічильники, тому зміна за день у KPI-картках дорівнює 0%.
 
+## Лабораторна робота 3: форма фільтрів і власні хуки
+
+Панель фільтрів на `react-hook-form`: три контрольовані поля (пошук за країною, континент, сортування), значення беруться зі стану форми через `Controller` (`value` + `onChange`). Кнопка «Скинути фільтри» повертає форму до початкових значень.
+
+- `hooks/useDebounce.ts`: затримує значення на 400 мс, щоб пошук і запит не спрацьовували на кожне натискання клавіші
+- `hooks/useFetch.ts`: приймає шлях запиту, повертає `{ data, loading, error }`, скасовує застарілі запити через `AbortController`
+- `components/FiltersForm`: презентаційна форма фільтрів
+- `components/KpiGrid`: презентаційна сітка KPI-карток
+- `containers/DashboardContainer`: форма → debounce → `useFetch` → відфільтрована вибірка → таблиця, список і KPI
+- `types/filters.ts`: тип фільтрів і значення за замовчуванням
+
+Потік даних: поле `sort` після debounce потрапляє в запит `/countries?sort=...`, а пошук і континент застосовуються до отриманих даних як derived state. KPI рахуються сумою по відфільтрованих країнах (`sumCountries` → `buildKpiItems`), тому оновлюються разом з таблицею. У контейнері немає прямих `fetch` і таймерів, лише виклики хуків.
+
+Зміни відносно ЛР2: `useEffect` із запитом винесено в `useFetch`, контейнери `CountriesContainer` і `KpiContainer` замінено одним `DashboardContainer`, функції `fetchCountries` і `fetchGlobal` видалено, у `diseaseApi.ts` лишився `getJson`.
+
 ## Структура
 
 ```
 src/
   api/          запити до API
   components/   презентаційні компоненти
-  containers/   завантаження даних і стани
+  containers/   зв'язує хуки, фільтри й компоненти
+  hooks/        власні хуки (useDebounce, useFetch)
   types/        інтерфейси TypeScript
   utils/        чисті допоміжні функції
   App.tsx
