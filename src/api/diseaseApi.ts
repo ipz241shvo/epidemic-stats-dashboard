@@ -1,5 +1,3 @@
-import type { CountryStat, GlobalStat } from '../types/country'
-
 const BASE_URL = 'https://disease.sh/v3/covid-19'
 
 export async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
@@ -11,9 +9,3 @@ export async function getJson<T>(path: string, signal?: AbortSignal): Promise<T>
 
   return (await response.json()) as T
 }
-
-export const fetchCountries = (signal?: AbortSignal) =>
-  getJson<CountryStat[]>('/countries', signal)
-
-export const fetchGlobal = (signal?: AbortSignal) =>
-  getJson<GlobalStat>('/all', signal)
