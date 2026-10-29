@@ -3,6 +3,7 @@ import { fetchCountries } from '../api/diseaseApi'
 import CountriesTable from '../components/CountriesTable'
 import StatusMessage from '../components/StatusMessage'
 import type { CountryStat } from '../types/country'
+import FilteredList from '../components/FilteredList'
 
 function CountriesContainer() {
   const [countries, setCountries] = useState<CountryStat[]>([])
@@ -35,7 +36,12 @@ function CountriesContainer() {
     return <StatusMessage variant="empty" message="Даних немає" />
   }
 
-  return <CountriesTable countries={countries} />
+  return (
+    <>
+      <CountriesTable countries={countries} />
+      <FilteredList title="Країни за континентами" items={countries} />
+    </>
+  )
 }
 
 export default CountriesContainer
