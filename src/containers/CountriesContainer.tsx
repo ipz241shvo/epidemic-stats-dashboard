@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { fetchCountries } from '../api/diseaseApi'
 import CountriesTable from '../components/CountriesTable'
+import FilteredList from '../components/FilteredList'
 import StatusMessage from '../components/StatusMessage'
 import type { CountryStat } from '../types/country'
-import FilteredList from '../components/FilteredList'
 
 function CountriesContainer() {
   const [countries, setCountries] = useState<CountryStat[]>([])
