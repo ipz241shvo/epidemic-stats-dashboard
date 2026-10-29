@@ -1,9 +1,9 @@
-import KpiCard from './components/KpiCard'
 import Counter from './components/Counter'
 import Toggle from './components/Toggle'
 import FilteredList from './components/FilteredList'
-import { countries, kpiItems } from './data/mockData'
 import CountriesContainer from './containers/CountriesContainer'
+import KpiContainer from './containers/KpiContainer'
+import { countries } from './data/mockData'
 
 function App() {
   return (
@@ -11,16 +11,7 @@ function App() {
       <h1>Епідемстатистика</h1>
 
       <Toggle title="Загальна статистика">
-        <section className="kpi-grid">
-          {kpiItems.map((item) => (
-            <KpiCard
-              key={item.id}
-              title={item.title}
-              value={item.value}
-              change={item.change}
-            />
-          ))}
-        </section>
+        <KpiContainer />
       </Toggle>
 
       <section>
@@ -35,7 +26,6 @@ function App() {
       <section>
         <FilteredList title="Країни" items={countries} />
       </section>
-      
     </main>
   )
 }
