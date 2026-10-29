@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { CountryStat } from '../types/country'
+import { formatNumber } from '../utils/format'
 
 interface FilteredListProps {
   title: string
@@ -11,7 +12,9 @@ const ALL = 'all'
 function FilteredList({ title, items }: FilteredListProps) {
   const [continent, setContinent] = useState(ALL)
 
-  const continents = [...new Set(items.map((item) => item.continent))].sort()
+  const continents = [...new Set(items.map((item) => item.continent))]
+    .filter(Boolean)
+    .sort()
 
   const visibleItems =
     continent === ALL
@@ -43,7 +46,7 @@ function FilteredList({ title, items }: FilteredListProps) {
             <li key={item.country} className="filtered-list__item">
               <span>{item.country}</span>
               <span className="filtered-list__cases">
-                {item.cases.toLocaleString('uk-UA')}
+                {formatNumber(item.cases)}
               </span>
             </li>
           ))}

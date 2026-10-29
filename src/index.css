@@ -88,6 +88,8 @@ main {
 .filtered-list__header h2 { margin: 0; font-size: 18px; }
 
 .filtered-list__items {
+  max-height: 360px;
+  overflow: auto;
   margin: 0;
   padding: 0;
   list-style: none;
