@@ -10,6 +10,7 @@ import { selectFilters } from '../store/selectors'
 import { useDashboardStore } from '../store/useDashboardStore'
 import type { CountryStat } from '../types/country'
 import { buildKpiItems, sumCountries } from '../utils/kpi'
+import ChartContainer from './ChartContainer'
 
 function DashboardContainer() {
   const filters = useDashboardStore(selectFilters)
@@ -54,6 +55,7 @@ function DashboardContainer() {
     }
     return (
       <>
+        <ChartContainer countries={visible} metric={sort} />
         <CountriesTable key={sort} countries={visible} initialSortKey={sort} />
         <FilteredList
           title="Країни за континентами"
