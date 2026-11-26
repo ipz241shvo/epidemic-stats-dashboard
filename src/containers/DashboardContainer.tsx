@@ -4,14 +4,15 @@ import FilteredList from '../components/FilteredList'
 import FiltersForm from '../components/FiltersForm'
 import KpiGrid from '../components/KpiGrid'
 import StatusMessage from '../components/StatusMessage'
-import { useFilters } from '../context/FiltersContext'
 import { useDebounce } from '../hooks/useDebounce'
 import { useFetch } from '../hooks/useFetch'
+import { selectFilters } from '../store/selectors'
+import { useDashboardStore } from '../store/useDashboardStore'
 import type { CountryStat } from '../types/country'
 import { buildKpiItems, sumCountries } from '../utils/kpi'
 
 function DashboardContainer() {
-  const { filters } = useFilters()
+  const filters = useDashboardStore(selectFilters)
 
   const search = useDebounce(filters.search, 400)
   const { continent, sort } = filters
@@ -75,7 +76,7 @@ function DashboardContainer() {
       </section>
 
       <section>
-        <h2>Таблиця країн</h2>
+        <h2>Країни</h2>
         <FiltersForm continents={continents} />
         {renderTable()}
       </section>
