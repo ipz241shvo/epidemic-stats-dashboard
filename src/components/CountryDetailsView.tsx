@@ -1,11 +1,13 @@
 import type { CountryDetails } from '../types/country'
 import { formatNumber } from '../utils/format'
+import type { ReactNode } from 'react'
 
 interface CountryDetailsViewProps {
   country: CountryDetails
+  actions?: ReactNode
 }
 
-function CountryDetailsView({ country }: CountryDetailsViewProps) {
+function CountryDetailsView({ country, actions }: CountryDetailsViewProps) {
   const rows = [
     { label: 'Континент', value: country.continent || '—' },
     { label: 'Населення', value: formatNumber(country.population) },
@@ -27,6 +29,7 @@ function CountryDetailsView({ country }: CountryDetailsViewProps) {
       <header className="details__header">
         <img src={country.countryInfo.flag} alt="" width={48} />
         <h2>{country.country}</h2>
+        <div className="details__actions">{actions}</div>
       </header>
 
       <dl className="details__list">
