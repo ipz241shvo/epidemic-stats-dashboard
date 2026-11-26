@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import type { CountryStat } from '../types/country'
 import { formatNumber } from '../utils/format'
 import { Link } from 'react-router'
+import { getCountryCode } from '../utils/country'
+import FavoriteButton from './FavoriteButton'
 
 type SortKey = 'country' | 'cases' | 'deaths' | 'recovered' | 'active'
 type SortDirection = 'asc' | 'desc'
@@ -57,20 +59,25 @@ function CountriesTable({ countries, initialSortKey = 'cases' }: CountriesTableP
           </tr>
         </thead>
         <tbody>
-          {sortedCountries.map((item) => (
-            <tr key={item.country}>
-              <td>
-                <img src={item.countryInfo.flag} alt="" width={20} />
-                <Link to={`/country/${encodeURIComponent(item.countryInfo.iso2 ?? item.country)}`}>
-                  {item.country}
-                </Link>
-              </td>
-              <td>{formatNumber(item.cases)}</td>
-              <td>{formatNumber(item.deaths)}</td>
-              <td>{formatNumber(item.recovered)}</td>
-              <td>{formatNumber(item.active)}</td>
-            </tr>
-          ))}
+          {sortedCountries.map((item) => {
+            const code = getCountryCode(item)
+
+            return (
+              <tr key={item.country}>
+                <td>
+                  <FavoriteButton code={code} />
+                  <img src={item.countryInfo.flag} alt="" width={20} />
+                  <Link to={`/country/${encodeURIComponent(code)}`}>
+                    {item.country}
+                  </Link>
+                </td>
+                <td>{formatNumber(item.cases)}</td>
+                <td>{formatNumber(item.deaths)}</td>
+                <td>{formatNumber(item.recovered)}</td>
+                <td>{formatNumber(item.active)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
