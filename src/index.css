@@ -8,6 +8,8 @@
   --border: #c9ced8;
   --up: #1a8f4c;
   --down: #c93030;
+  --accent: #3b6ff5;
+  --on-accent: #fff;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
@@ -21,6 +23,8 @@
   --border: #3a4254;
   --up: #3ecf7a;
   --down: #ff6b6b;
+  --accent: #7aa2ff;
+  --on-accent: #121620;
 }
 
 body {
@@ -211,3 +215,46 @@ main {
 .details__row dt { color: var(--muted); }
 .details__row dd { margin: 0; font-weight: 600; }
 .details__updated { color: var(--muted); font-size: 14px; }
+
+.favorite-button {
+  padding: 0 8px 0 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.details__actions { margin-left: auto; }
+.details__actions .favorite-button { padding: 0; font-size: 28px; }
+
+.chart {
+  margin-bottom: 24px;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.chart__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.chart__header h2 { margin: 0; font-size: 18px; }
+
+.chart__body { height: 340px; }
+
+.chart-switch { display: flex; gap: 8px; }
+
+.chart-switch button[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
