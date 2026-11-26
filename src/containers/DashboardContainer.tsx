@@ -4,7 +4,6 @@ import FilteredList from '../components/FilteredList'
 import FiltersForm from '../components/FiltersForm'
 import KpiGrid from '../components/KpiGrid'
 import StatusMessage from '../components/StatusMessage'
-import Toggle from '../components/Toggle'
 import { useFilters } from '../context/FiltersContext'
 import { useDebounce } from '../hooks/useDebounce'
 import { useFetch } from '../hooks/useFetch'
@@ -66,7 +65,10 @@ function DashboardContainer() {
 
   return (
     <>
-      <Toggle title="Загальна статистика">{renderKpi()}</Toggle>
+      <section>
+        <h2>Загальна статистика</h2>
+        {renderKpi()}
+      </section>
 
       <section>
         <Counter label="Днів історії" initialValue={30} min={7} max={90} />
