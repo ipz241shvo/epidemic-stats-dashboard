@@ -42,6 +42,15 @@ export interface GlobalStat {
   affectedCountries: number
 }
 
+export interface CountryDetails extends CountryStat {
+  updated: number
+  testsPerOneMillion: number
+  deathsPerOneMillion: number
+  recoveredPerOneMillion: number
+  activePerOneMillion: number
+  criticalPerOneMillion: number
+}
+
 export type KpiTotals = Pick<
   GlobalStat,
   'cases' | 'todayCases' | 'recovered' | 'todayRecovered' | 'deaths' | 'todayDeaths'
