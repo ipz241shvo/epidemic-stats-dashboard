@@ -11,3 +11,10 @@ export const DEFAULT_FILTERS: Filters = {
   continent: '',
   sort: 'cases',
 }
+
+export const SORT_OPTIONS: { value: SortField; label: string }[] = [
+  { value: 'cases', label: 'За випадками' },
+  { value: 'deaths', label: 'За смертями' },
+  { value: 'recovered', label: 'За одужаннями' },
+  { value: 'active', label: 'За активними' },
+]
