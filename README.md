@@ -30,7 +30,7 @@ npm run lint    # перевірка ESLint
 ## Лабораторна робота 1: прості віджети
 
 - `KpiCard`: картка показника (заголовок, значення, зміна), використана тричі з різними props
-- `Counter`: лічильник з кнопками «+», «−», скидання та обмеженнями `min`/`max`
+- `Counter`: лічильник з кнопками «+», «−», скидання та обмеженнями `min`/`max` (у ЛР5 став керованим: значення й `onChange` приходять ззовні, додано повзунок і пресети)
 - `Toggle`: перемикач світлої/темної теми секції, містить вкладений вміст через `children` (у ЛР4 замінений глобальним `ThemeToggle`)
 - `FilteredList`: список країн з фільтром за континентом
 
@@ -69,7 +69,7 @@ Mock-дані замінено на реальні з disease.sh. Запити �
 
 | Маршрут | Сторінка |
 | --- | --- |
-| `/` | `DashboardPage`: KPI, лічильник, фільтри, графік, таблиця й список |
+| `/` | `DashboardPage`: KPI, лічильник, графік історії, фільтри, графік топ-10, таблиця й список |
 | `/country/:code` | `CountryPage`: розширена інформація про країну |
 | `*` | `NotFoundPage`: повідомлення «Сторінку не знайдено» |
 
@@ -83,31 +83,37 @@ Mock-дані замінено на реальні з disease.sh. Запити �
 
 ## Лабораторна робота 5: Zustand та графіки
 
-Глобальний стан винесено в єдиний store на Zustand (`store/useDashboardStore.ts`): активні фільтри, список «обране», тема та тип графіка. `FiltersContext`, `ThemeContext` і `react-hook-form` прибрано, щоб один і той самий стан не жив у двох місцях. Кеш завантажених даних у store не переносився: `useFetch` достатньо.
+Глобальний стан винесено в єдиний store на Zustand (`store/useDashboardStore.ts`): активні фільтри, список «обране», тема, тип графіка та кількість днів історії. `FiltersContext`, `ThemeContext` і `react-hook-form` прибрано, щоб один і той самий стан не жив у двох місцях. Кеш завантажених даних у store не переносився: `useFetch` достатньо.
 
-- `store/useDashboardStore.ts`: стан і дії (`setFilter`, `resetFilters`, `toggleFavorite`, `toggleTheme`, `setChartType`), усі оновлення імутабельні (через `set` з новими об'єктами й масивами)
+- `store/useDashboardStore.ts`: стан і дії (`setFilter`, `resetFilters`, `toggleFavorite`, `toggleTheme`, `setChartType`, `setHistoryDays`), усі оновлення імутабельні (через `set` з новими об'єктами й масивами)
 - `store/selectors.ts`: селектори, компоненти читають стан лише через них, а змінюють через дії store
 - `components/FiltersForm`: контрольовані поля (`value` + `onChange`) напряму зі store
-- `components/ThemeToggle`: перемикач теми, читає й змінює тему через store; клас `data-theme` на `<html>` виставляє `App.tsx`
+- `components/ThemeToggle`: перемикач теми, читає й змінює тему через store; атрибут `data-theme` на `<html>` виставляє `App.tsx`
 - `components/FavoriteButton`: додає/прибирає країну з обраного, використана в таблиці й на сторінці деталей
+- `components/Counter`: керований лічильник «Днів історії» (кнопки «−/+», повзунок, пресети 7/14/30/90, скидання), значення й `onChange` задаються через props, межі `min`/`max` гарантуються функцією `clamp`
 - `components/MetricChart`: презентаційний графік на Recharts, тип (`bar` / `line`) і дані задаються через props
 - `components/ChartTypeSwitch`: перемикач типу графіка
 - `containers/ChartContainer`: бере відфільтрований список і метрику сортування, будує топ-10 країн, тип графіка читає зі store
-- `utils/chart.ts`: `buildChartData`, чиста функція підготовки даних для графіка
+- `containers/HistoryChartContainer`: бере `historyDays` зі store, після debounce завантажує `/historical/all?lastdays=N` через `useFetch` і малює динаміку нових випадків тим самим `MetricChart`; тип графіка спільний зі store, тому перемикач змінює обидва графіки
+- `utils/chart.ts`: `buildChartData`, чиста функція підготовки даних для топ-10
+- `utils/history.ts`: `buildDailyChange`, перетворює накопичувальні значення API на щоденний приріст
 - `utils/country.ts`: `getCountryCode`, єдине місце, де визначається код країни (для посилань і «обраного»)
 - `types/chart.ts`: тип графіка й опції перемикача
+- `types/history.ts`: тип відповіді `/historical/all`
 
-Графік реагує на пошук, континент і сортування, бо будується з тієї ж відфільтрованої вибірки, що й таблиця та KPI. Обране відображається в таблиці та на сторінці деталей через один і той самий store. Локальні стани `Counter` і `FilteredList` залишено в компонентах: вони потрібні лише їм.
+Графік топ-10 реагує на пошук, континент і сортування, бо будується з тієї ж відфільтрованої вибірки, що й таблиця та KPI. Графік історії реагує на лічильник «Днів історії». Обране відображається в таблиці та на сторінці деталей через один і той самий store. Локальний стан `FilteredList` залишено в компоненті: він потрібен лише йому. Значення `Counter` перенесено в store, бо від нього залежить графік історії.
 
-Потік даних: компонент викликає дію (`setFilter`) → store оновлюється через `set` → селектори віддають нове значення → підписані компоненти перемальовуються.
+Примітка: disease.sh більше не оновлюється, тому графік історії показує дані за останні дні, що є в API (початок 2023 року), а не за поточні дати.
+
+Потік даних: компонент викликає дію (`setFilter`, `setHistoryDays`) → store оновлюється через `set` → селектори віддають нове значення → підписані компоненти перемальовуються.
 
 ## Структура
 
 ```
 src/
   api/          запити до API
-  components/   презентаційні компоненти (Layout, ThemeToggle, MetricChart, FavoriteButton, ...)
-  containers/   зв'язує хуки, store й компоненти (DashboardContainer, ChartContainer)
+  components/   презентаційні компоненти (Layout, ThemeToggle, Counter, MetricChart, FavoriteButton, ...)
+  containers/   зв'язує хуки, store й компоненти (DashboardContainer, ChartContainer, HistoryChartContainer)
   hooks/        власні хуки (useDebounce, useFetch)
   pages/        сторінки-маршрути (DashboardPage, CountryPage, NotFoundPage)
   store/        глобальний стан (Zustand) і селектори

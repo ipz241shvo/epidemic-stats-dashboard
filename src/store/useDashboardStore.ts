@@ -5,17 +5,21 @@ import type { Filters } from '../types/filters'
 
 export type Theme = 'light' | 'dark'
 
+export const DEFAULT_HISTORY_DAYS = 30
+
 export interface DashboardState {
   filters: Filters
   favorites: string[]
   theme: Theme
   chartType: ChartType
+  historyDays: number
 
   setFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void
   resetFilters: () => void
   toggleFavorite: (code: string) => void
   toggleTheme: () => void
   setChartType: (type: ChartType) => void
+  setHistoryDays: (days: number) => void
 }
 
 export const useDashboardStore = create<DashboardState>()((set) => ({
@@ -23,6 +27,7 @@ export const useDashboardStore = create<DashboardState>()((set) => ({
   favorites: [],
   theme: 'light',
   chartType: 'bar',
+  historyDays: DEFAULT_HISTORY_DAYS,
 
   setFilter: (key, value) =>
     set((state) => ({ filters: { ...state.filters, [key]: value } })),
@@ -40,4 +45,6 @@ export const useDashboardStore = create<DashboardState>()((set) => ({
     set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
 
   setChartType: (chartType) => set({ chartType }),
+
+  setHistoryDays: (historyDays) => set({ historyDays }),
 }))

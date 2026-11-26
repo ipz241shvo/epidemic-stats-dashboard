@@ -33,7 +33,7 @@ function MetricChart({ type, data, label }: MetricChartProps) {
       <XAxis
         dataKey="name"
         tick={AXIS_TICK}
-        interval={0}
+        interval={data.length > 12 ? 'preserveStartEnd' : 0}
         angle={-35}
         textAnchor="end"
         height={70}

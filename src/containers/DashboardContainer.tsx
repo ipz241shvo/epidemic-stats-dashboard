@@ -6,14 +6,21 @@ import KpiGrid from '../components/KpiGrid'
 import StatusMessage from '../components/StatusMessage'
 import { useDebounce } from '../hooks/useDebounce'
 import { useFetch } from '../hooks/useFetch'
-import { selectFilters } from '../store/selectors'
-import { useDashboardStore } from '../store/useDashboardStore'
+import {
+  selectFilters,
+  selectHistoryDays,
+  selectSetHistoryDays,
+} from '../store/selectors'
+import { DEFAULT_HISTORY_DAYS, useDashboardStore } from '../store/useDashboardStore'
 import type { CountryStat } from '../types/country'
 import { buildKpiItems, sumCountries } from '../utils/kpi'
 import ChartContainer from './ChartContainer'
+import HistoryChartContainer from './HistoryChartContainer'
 
 function DashboardContainer() {
   const filters = useDashboardStore(selectFilters)
+  const historyDays = useDashboardStore(selectHistoryDays)
+  const setHistoryDays = useDashboardStore(selectSetHistoryDays)
 
   const search = useDebounce(filters.search, 400)
   const { continent, sort } = filters
@@ -74,7 +81,16 @@ function DashboardContainer() {
       </section>
 
       <section>
-        <Counter label="Днів історії" initialValue={30} min={7} max={90} />
+        <Counter
+          label="Днів історії"
+          value={historyDays}
+          onChange={setHistoryDays}
+          resetValue={DEFAULT_HISTORY_DAYS}
+          min={7}
+          max={90}
+          presets={[7, 14, 30, 90]}
+        />
+        <HistoryChartContainer />
       </section>
 
       <section>

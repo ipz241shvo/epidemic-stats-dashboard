@@ -10,6 +10,9 @@ export const selectToggleTheme = (state: DashboardState) => state.toggleTheme
 export const selectChartType = (state: DashboardState) => state.chartType
 export const selectSetChartType = (state: DashboardState) => state.setChartType
 
+export const selectHistoryDays = (state: DashboardState) => state.historyDays
+export const selectSetHistoryDays = (state: DashboardState) => state.setHistoryDays
+
 export const selectToggleFavorite = (state: DashboardState) => state.toggleFavorite
 export const selectIsFavorite = (code: string) => (state: DashboardState) =>
   state.favorites.includes(code)
