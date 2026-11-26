@@ -1,11 +1,16 @@
-import DashboardContainer from './containers/DashboardContainer'
+import { Route, Routes } from 'react-router'
+import Layout from './components/Layout'
+import DashboardPage from './pages/DashboardPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
-    <main>
-      <h1>Епідемстатистика</h1>
-      <DashboardContainer />
-    </main>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }
 
