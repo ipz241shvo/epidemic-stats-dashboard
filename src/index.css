@@ -181,3 +181,33 @@ main {
 }
 
 .filters-form input { flex: 1; min-width: 180px; }
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.app-header h1 { margin: 0; }
+.app-header a { text-decoration: none; }
+
+.back-link { display: inline-block; margin-bottom: 16px; }
+
+.details {
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.details__header { display: flex; align-items: center; gap: 12px; }
+.details__header h2 { margin: 0; }
+.details__list { margin: 16px 0 0; }
+.details__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--surface-alt);
+}
+.details__row dt { color: var(--muted); }
+.details__row dd { margin: 0; font-weight: 600; }
+.details__updated { color: var(--muted); font-size: 14px; }
