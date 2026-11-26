@@ -1,14 +1,13 @@
 import { Controller } from 'react-hook-form'
-import type { Control } from 'react-hook-form'
-import type { Filters } from '../types/filters'
+import { useFilters } from '../context/FiltersContext'
 
 interface FiltersFormProps {
-  control: Control<Filters>
   continents: string[]
-  onReset: () => void
 }
 
-function FiltersForm({ control, continents, onReset }: FiltersFormProps) {
+function FiltersForm({ continents }: FiltersFormProps) {
+  const { control, resetFilters } = useFilters()
+
   return (
     <form className="filters-form" onSubmit={(event) => event.preventDefault()}>
       <Controller
@@ -52,7 +51,7 @@ function FiltersForm({ control, continents, onReset }: FiltersFormProps) {
         )}
       />
 
-      <button type="button" onClick={onReset}>
+      <button type="button" onClick={resetFilters}>
         Скинути фільтри
       </button>
     </form>

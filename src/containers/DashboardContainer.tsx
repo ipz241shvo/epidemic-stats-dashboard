@@ -1,4 +1,3 @@
-import { useForm, useWatch } from 'react-hook-form'
 import Counter from '../components/Counter'
 import CountriesTable from '../components/CountriesTable'
 import FilteredList from '../components/FilteredList'
@@ -6,16 +5,14 @@ import FiltersForm from '../components/FiltersForm'
 import KpiGrid from '../components/KpiGrid'
 import StatusMessage from '../components/StatusMessage'
 import Toggle from '../components/Toggle'
+import { useFilters } from '../context/FiltersContext'
 import { useDebounce } from '../hooks/useDebounce'
 import { useFetch } from '../hooks/useFetch'
 import type { CountryStat } from '../types/country'
-import { DEFAULT_FILTERS } from '../types/filters'
-import type { Filters } from '../types/filters'
 import { buildKpiItems, sumCountries } from '../utils/kpi'
 
 function DashboardContainer() {
-  const { control, reset } = useForm<Filters>({ defaultValues: DEFAULT_FILTERS })
-  const filters = useWatch({ control }) as Filters
+  const { filters } = useFilters()
 
   const search = useDebounce(filters.search, 400)
   const { continent, sort } = filters
@@ -77,11 +74,7 @@ function DashboardContainer() {
 
       <section>
         <h2>Таблиця країн</h2>
-        <FiltersForm
-          control={control}
-          continents={continents}
-          onReset={() => reset(DEFAULT_FILTERS)}
-        />
+        <FiltersForm continents={continents} />
         {renderTable()}
       </section>
     </>
